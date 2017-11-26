@@ -1,0 +1,12 @@
+C:\Users\Guy\AppData\Local\Temporary Projects\TheMaze\obj\Debug\Server.csprojResolveAssemblyReference.cache
+C:\Users\Guy\AppData\Local\Temporary Projects\TheMaze\bin\Debug\TheMaze.exe.config
+C:\Users\Guy\Documents\Visual Studio 2015\Projects\TheMaze\TheMaze\obj\Debug\Server.csprojResolveAssemblyReference.cache
+C:\Users\Guy\Documents\Visual Studio 2015\Projects\TheMaze\TheMaze\bin\Debug\TheMaze.exe.config
+C:\Users\Guy\Documents\Visual Studio 2015\Projects\TheMaze\TheMaze\bin\Debug\TheMaze.exe
+C:\Users\Guy\Documents\Visual Studio 2015\Projects\TheMaze\TheMaze\bin\Debug\TheMaze.pdb
+C:\Users\Guy\Documents\Visual Studio 2015\Projects\TheMaze\TheMaze\bin\Debug\MazeLibary.dll
+C:\Users\Guy\Documents\Visual Studio 2015\Projects\TheMaze\TheMaze\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Guy\Documents\Visual Studio 2015\Projects\TheMaze\TheMaze\bin\Debug\MazeLibary.pdb
+C:\Users\Guy\Documents\Visual Studio 2015\Projects\TheMaze\TheMaze\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Guy\Documents\Visual Studio 2015\Projects\TheMaze\TheMaze\obj\Debug\TheMaze.exe
+C:\Users\Guy\Documents\Visual Studio 2015\Projects\TheMaze\TheMaze\obj\Debug\TheMaze.pdb
