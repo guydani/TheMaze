@@ -4,3 +4,4 @@ C:\Users\Guy\Documents\Visual Studio 2015\Projects\TheMaze\MazeLibary\bin\Debug\
 C:\Users\Guy\Documents\Visual Studio 2015\Projects\TheMaze\MazeLibary\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Guy\Documents\Visual Studio 2015\Projects\TheMaze\MazeLibary\obj\Debug\MazeLibary.dll
 C:\Users\Guy\Documents\Visual Studio 2015\Projects\TheMaze\MazeLibary\obj\Debug\MazeLibary.pdb
+C:\Users\Guy\Documents\Visual Studio 2015\Projects\TheMaze\MazeLibary\obj\Debug\MazeLibary.csprojResolveAssemblyReference.cache
