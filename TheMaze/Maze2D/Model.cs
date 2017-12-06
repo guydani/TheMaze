@@ -29,6 +29,12 @@ namespace Server
         public void GenerateMazeSingle(MazeProperty mazeProperty, int index,
             AbstractCreateMaze<Cell, int, Position> createMaze, List<int> s)
         {
+            if(Games.ContainsKey(mazeProperty.Name))
+            {
+                OnDoneWorking("error, this game is exist", index);
+                return;
+            }
+            MakeSizeAppropriate(s);
             IMaze<ICell<int>, int, IPosition<int>> maze = new MazeLibary.Interface_Application.Maze2D(s);
             createMaze.Maze = maze;
             mazeProperty.StartPoint = createMaze.Maze.Entrance.GetPosition;
@@ -36,6 +42,17 @@ namespace Server
             mazeProperty.MazePresentation = createMaze.Maze.GetMazePresentation();
             Games[mazeProperty.Name] = createMaze.Maze;
             OnDoneWorking(mazeProperty.SerializeClass(), index);
+        }
+
+        private void MakeSizeAppropriate(List<int> s)
+        {
+            for(int i = 0; i < s.Count; i++)
+            {
+                int temp = s[0];
+                s.Remove(temp);
+                temp = temp * 2 - 1;
+                s.Add(temp);
+            }
         }
 
         public void GiveHint(SolveProperty solveProperty, int index,

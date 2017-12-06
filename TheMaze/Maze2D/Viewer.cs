@@ -53,7 +53,8 @@ namespace Server.Maze2D
         {
             byte[] data = new byte[1024];
             data = Encoding.ASCII.GetBytes(json.ToUpper());
-            IClient client = ClientSaver[index];;
+            IClient client = ClientSaver[index];
+            ClientSaver.Remove(index);
             client.Socket.Send(data, data.Length * sizeof(byte), SocketFlags.None);
         }
 

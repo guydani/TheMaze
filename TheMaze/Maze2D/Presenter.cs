@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MazeLibary.SearcherClasses;
+using System.Threading;
 using Newtonsoft.Json;
 using Server.Interface;
 using Server.Maze2D.Json;
@@ -16,6 +16,7 @@ namespace Server.Maze2D
         private Dictionary<string, ITask> options;
         private TaskFactory taskFactory;
         private QueueMoveTask queueMoveTask;
+        private Mutex mut = new Mutex();
 
         public Presenter(IModel m, IViewer v)
         {
@@ -57,6 +58,7 @@ namespace Server.Maze2D
         /* need to lock before getting a number until ending we input the task to place */
         public void AddTaskToThreadPool(string s, IClient c)
         {
+            mut.WaitOne();
             int index = GetIndexTask();
             string[] commands = s.Split(' ');
             ITask task = options[commands[0]];
@@ -74,6 +76,7 @@ namespace Server.Maze2D
                 viewer.SendMessage(exception.Message, index);
                 return;
             }
+
             if (s.Contains("play") || s.Contains("close"))
             {
                 var multiPlayerInformation = model.MultiPlayerInformation[commands[0]];
@@ -90,6 +93,7 @@ namespace Server.Maze2D
             {
                 viewer.ClientSaver[index] = c;
             }
+            mut.ReleaseMutex();
             if (s.Contains("play"))
             {
                 queueMoveTask.Enqueue((MoveTask) task);
