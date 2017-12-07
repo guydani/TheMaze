@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using Newtonsoft.Json;
 
 
@@ -21,15 +22,22 @@ namespace Client
             try
             {
                 server.Connect(ipep);
+                Thread thread = new Thread(delegate ()
+                {
+                    while (true)
+                    {
+                        byte[] data = new byte[1024];
+                        int recv = server.Receive(data);
+                        string stringData = Encoding.ASCII.GetString(data, 0, recv);
+                        Console.WriteLine(stringData);
+                    }
+                });
+                thread.Start();
                 while (true)
                 {
                     string input = Console.ReadLine();
                     if (input == "exit") break;
                     server.Send(Encoding.ASCII.GetBytes(input));
-                    byte[] data = new byte[1024];
-                    int recv = server.Receive(data);
-                    string stringData = Encoding.ASCII.GetString(data, 0, recv);
-                    Console.WriteLine(stringData);
                 }
                 server.Shutdown(SocketShutdown.Both);
                 server.Close();
