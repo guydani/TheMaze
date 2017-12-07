@@ -12,7 +12,6 @@ namespace Server.Maze2D
 {
     public class Viewer: IViewer
     {
-        public event MoveTaskSend MoveTaskSended;
         public event MessageRecived MessageRecivedWaitToExecute;
         public Dictionary<int, IClient> ClientSaver { get;}
         private Socket socket;
@@ -62,12 +61,6 @@ namespace Server.Maze2D
         {
             if (MessageRecivedWaitToExecute != null)
                 MessageRecivedWaitToExecute(s, client);
-        }
-
-        protected virtual void OnMoveTaskSended()
-        {
-            if (MoveTaskSended != null)
-                MoveTaskSended();
         }
 
         public void AddClientSaver(int index, IClient client)

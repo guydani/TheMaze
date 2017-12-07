@@ -8,11 +8,9 @@ using Server.Maze2D;
 
 namespace Server
 {
-    public delegate void MoveTaskSend();
     public delegate void MessageRecived(string data, IClient client);
     public interface IViewer
     {
-        event MoveTaskSend MoveTaskSended;
         event MessageRecived MessageRecivedWaitToExecute;
         Dictionary<int, IClient> ClientSaver { get; }
         void Start();

@@ -91,6 +91,11 @@ namespace Server
 
         public void MultiPlayerOption(MultiPlayersInformation multiPlayer, List<int> size, int index)
         {
+            if (Games.ContainsKey(multiPlayer.Name))
+            {
+                OnDoneWorking("error, this game is exist", index);
+                return;
+            }
             if (!MultiPlayerInformation.ContainsKey(multiPlayer.Name))
             {
                 MultiPlayerInformation[multiPlayer.Name] = multiPlayer;
@@ -106,11 +111,14 @@ namespace Server
                 {
                     check.SecondClient = multiPlayer.FirstClient;
                     check.Index2 = index;
+                    MakeSizeAppropriate(size);
                     IMaze<ICell<int>, int, IPosition<int>> maze = new MazeLibary.Interface_Application.Maze2D(size);
                     var kruskalAlgorithem= new KruskalAlgorithem<Cell, int, Position>();
                     kruskalAlgorithem.Maze = maze;
                     Games[check.Name] = kruskalAlgorithem.Maze;
                     var mazeProperty = new MazePropertyMultiPlayer();
+                    mazeProperty.Name = check.Name;
+                    mazeProperty.MazePresentation = kruskalAlgorithem.Maze.GetMazePresentationForMultiPlayer();
                     mazeProperty.StartPoint = kruskalAlgorithem.Maze.Entrance.GetPosition;
                     mazeProperty.AdditionalStartPoint = kruskalAlgorithem.Maze.OptionalEntrance.GetPosition;
                     mazeProperty.EndPoint = kruskalAlgorithem.Maze.OptionalExit.GetPosition;

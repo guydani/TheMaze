@@ -11,56 +11,36 @@ namespace Server.Maze2D
     public class QueueMoveTask
     {
         private LinkedList<MoveTask> queue;
-        private Mutex mutex;
-        private volatile bool isActive;
-        private Thread thread;
+        private SemaphoreSlim semaphoreSlim;
+        private List<Thread> lThread;
 
         public QueueMoveTask()
         {
             queue = new LinkedList<MoveTask>();
-            mutex = new Mutex();
-            isActive = false;
-            thread = null;
+            semaphoreSlim = new SemaphoreSlim(0);
+            lThread = new List<Thread>();
+            for(int i = 0; i < 5; i++)
+            {
+                lThread.Add(new Thread(() => Dequeue()));
+                lThread[i].Start();
+            }
         }
 
         public void Dequeue()
         {
-            var v = queue.First();
-            queue.Remove(v);
-            v.HandleTask();
+            while(true)
+            {
+                semaphoreSlim.Wait();
+                var v = queue.First();
+                queue.Remove(v);
+                v.HandleTask();
+            }
         }
 
         public void Enqueue(MoveTask moveTask)
         {
             queue.AddLast(moveTask);
-            mutex.WaitOne();
-            if (!isActive)
-            {
-                isActive = true;
-                thread = new Thread(() => Dequeue());
-            } 
-            mutex.ReleaseMutex();
-        }
-
-        public bool isEmpty()
-        {
-            if (queue.Count == 0)
-                return true;
-            return false;
-        }
-
-        public void ContinueActiveQueue()
-        {
-            if (isEmpty())
-            {
-                thread.Join();
-                isActive = false;
-
-            }
-            else
-            {
-                Dequeue();
-            }
+            semaphoreSlim.Release();
         }
     }
 }

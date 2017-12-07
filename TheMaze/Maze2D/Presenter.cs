@@ -23,7 +23,6 @@ namespace Server.Maze2D
             model = m;
             viewer = v;
             viewer.MessageRecivedWaitToExecute += AddTaskToThreadPool;
-            viewer.MoveTaskSended += ActiveQueue;
             model.DoneWork += EndWork;
             CreateOptionsDictionary();
             taskFactory = new TaskFactory();
@@ -40,7 +39,7 @@ namespace Server.Maze2D
             options.Add("solve2", new BestFsSolver(model));
             options.Add("games_waiting", new GamesWaitingTasks(model));
             options.Add("multiplayer", new MultiPlayerTask(model));
-            options.Add("play", new MoveTask(model));
+            options.Add("move", new MoveTask(model));
             options.Add("close", new CloseTask(model));
         }
 
@@ -72,14 +71,14 @@ namespace Server.Maze2D
             }
             catch (Exception exception)
             {
-                //check
+                viewer.ClientSaver[index] = c;
                 viewer.SendMessage(exception.Message, index);
                 return;
             }
-
-            if (s.Contains("play") || s.Contains("close"))
+            if (s.Contains("move") || s.Contains("close"))
             {
-                var multiPlayerInformation = model.MultiPlayerInformation[commands[0]];
+
+                var multiPlayerInformation = model.MultiPlayerInformation[commands[1]];
                 if (multiPlayerInformation.FirstClient.Equals(c))
                 {
                     viewer.ClientSaver[index] = multiPlayerInformation.SecondClient;
@@ -94,7 +93,7 @@ namespace Server.Maze2D
                 viewer.ClientSaver[index] = c;
             }
             mut.ReleaseMutex();
-            if (s.Contains("play"))
+            if (s.Contains("move"))
             {
                 queueMoveTask.Enqueue((MoveTask) task);
             }
@@ -109,9 +108,5 @@ namespace Server.Maze2D
             viewer.SendMessage(json, index);   
         }
 
-        public void ActiveQueue()
-        {
-            queueMoveTask.ContinueActiveQueue();
-        }
     }
 }

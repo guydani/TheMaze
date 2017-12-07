@@ -10,6 +10,7 @@ namespace Server.Maze2D.Tasks
     public class MoveTask: ITask
     {
         public int NumberOfTask { get; set; }
+        public string Name { get; set; }
         public string command { get; set; }
         private IModel model;
 
@@ -22,7 +23,8 @@ namespace Server.Maze2D.Tasks
         {
             try
             {
-                command = s[1];
+                Name = s[1];
+                command = s[2];
                 NumberOfTask = index;
             }
             catch (Exception)
