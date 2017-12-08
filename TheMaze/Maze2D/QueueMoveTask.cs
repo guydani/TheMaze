@@ -19,7 +19,7 @@ namespace Server.Maze2D
             queue = new LinkedList<MoveTask>();
             semaphoreSlim = new SemaphoreSlim(0);
             lThread = new List<Thread>();
-            for(int i = 0; i < 5; i++)
+            for(int i = 0; i < 1; i++)
             {
                 lThread.Add(new Thread(() => Dequeue()));
                 lThread[i].Start();
@@ -32,7 +32,7 @@ namespace Server.Maze2D
             {
                 semaphoreSlim.Wait();
                 var v = queue.First();
-                queue.Remove(v);
+                queue.RemoveFirst();
                 v.HandleTask();
             }
         }
