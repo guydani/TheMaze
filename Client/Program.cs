@@ -37,7 +37,7 @@ namespace Client
                 {
                     string input = Console.ReadLine();
                     if (input == "exit") break;
-                    server.Send(Encoding.ASCII.GetBytes(input));
+                    server.Send(Encoding.ASCII.GetBytes(input + "\n"));
                 }
                 server.Shutdown(SocketShutdown.Both);
                 server.Close();

@@ -39,7 +39,12 @@ namespace Server.Maze2D
                         int recv = c.Receive(data);
                         if (recv == 0) break;
                         string str = Encoding.ASCII.GetString(data, 0, recv);
-                        OnMessageRecived(str, client);
+                        String[] commands = str.Split(new[] { "\n" },StringSplitOptions.None);
+                        foreach(var i in commands)
+                        {
+                            if (i == "") { break; }
+                            OnMessageRecived(i, client);
+                        }
                     }
                     c.Close();
                 });
