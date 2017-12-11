@@ -10,14 +10,14 @@ namespace Server
 {
     public class PriorityQueue
     {
-        private LinkedList<MoveTask> queue;
+        private List<MoveTask> queue;
         private int startNumber;
         private SemaphoreSlim semaphore;
         private Thread thread;
 
         public PriorityQueue(int start)
         {
-            queue = new LinkedList<MoveTask>();
+            queue = new List<MoveTask>();
             startNumber = start;
             semaphore = new SemaphoreSlim(0);
             thread = new Thread(() => LoopPriorityQueue());
@@ -38,7 +38,7 @@ namespace Server
 
         public void Enqueue(MoveTask moveTask)
         {
-            queue.AddLast(moveTask);
+            queue.Add(moveTask);
             semaphore.Release();
         }
 

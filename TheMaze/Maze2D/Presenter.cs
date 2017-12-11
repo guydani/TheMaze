@@ -30,15 +30,15 @@ namespace Server.Maze2D
         private void CreateOptionsDictionary()
         {
             options = new Dictionary<string, ITask>();
-            options.Add("generate1", new CreateMazeDFS(model));
-            options.Add("generate2", new CreateMazeKruskal(model));
-            options.Add("generate3", new CreateMazePrim(model));
-            options.Add("solve1", new BfsSolver(model));
-            options.Add("solve2", new BestFsSolver(model));
-            options.Add("games_waiting", new GamesWaitingTasks(model));
-            options.Add("multiplayer", new MultiPlayerTask(model));
-            options.Add("move", new MoveTask(model));
-            options.Add("close", new CloseTask(model));
+            options["generate1"] = new CreateMazeDFS(model);
+            options["generate2"] = new CreateMazeKruskal(model);
+            options["generate3"] = new CreateMazePrim(model);
+            options["solve1"] = new BfsSolver(model);
+            options["solve2"] = new BestFsSolver(model);
+            options["games_waiting"] = new GamesWaitingTasks(model);
+            options["multiplayer"] = new MultiPlayerTask(model);
+            options["move"] = new MoveTask(model);
+            options["close"] = new CloseTask(model);
         }
 
         private int GetIndexTask()
@@ -55,6 +55,8 @@ namespace Server.Maze2D
         /* need to lock before getting a number until ending we input the task to place */
         public void AddTaskToThreadPool(string s, IClient c)
         {
+            /*important for the movetask */
+            CreateOptionsDictionary();
             mut.WaitOne();
             int index = GetIndexTask();
             string[] commands = s.Split(' ');

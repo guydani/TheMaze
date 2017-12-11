@@ -10,10 +10,10 @@ using Server.Interface;
 
 namespace Server.Maze2D
 {
-    public class Viewer: IViewer
+    public class Viewer : IViewer
     {
         public event MessageRecived MessageRecivedWaitToExecute;
-        public Dictionary<int, IClient> ClientSaver { get;}
+        public Dictionary<int, IClient> ClientSaver { get; }
         private Socket socket;
 
         public Viewer()
@@ -32,15 +32,16 @@ namespace Server.Maze2D
             {
                 Socket c = socket.Accept();
                 Client client = new Client(c);
-                Thread t = new Thread(delegate () {
+                Thread t = new Thread(delegate ()
+                {
                     while (true)
                     {
                         byte[] data = new byte[1024];
                         int recv = c.Receive(data);
                         if (recv == 0) break;
                         string str = Encoding.ASCII.GetString(data, 0, recv);
-                        String[] commands = str.Split(new[] { "\n" },StringSplitOptions.None);
-                        foreach(var i in commands)
+                        String[] commands = str.Split(new[] { "\n" }, StringSplitOptions.None);
+                        foreach (var i in commands)
                         {
                             if (i == "") { break; }
                             OnMessageRecived(i, client);
@@ -57,12 +58,9 @@ namespace Server.Maze2D
         {
             byte[] data = new byte[1024];
             data = Encoding.ASCII.GetBytes(json.ToUpper());
-            if(ClientSaver.ContainsKey(index))
-            {
-                IClient client = ClientSaver[index];
-                ClientSaver.Remove(index);
-                client.Socket.Send(data, data.Length * sizeof(byte), SocketFlags.None);
-            }
+            IClient client = ClientSaver[index];
+            ClientSaver.Remove(index);
+            client.Socket.Send(data, data.Length * sizeof(byte), SocketFlags.None);
         }
 
         protected virtual void OnMessageRecived(string s, IClient client)
