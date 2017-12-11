@@ -61,10 +61,10 @@
     <Compile Include="Maze2D\Json\MazePropertyMultiPlayer.cs" />
     <Compile Include="Maze2D\Json\SolveProperty.cs" />
     <Compile Include="Maze2D\Model.cs" />
+    <Compile Include="Maze2D\PriorityQueue.cs" />
     <Compile Include="Maze2D\MultiPlayersInformation.cs" />
     <Compile Include="Maze2D\Presenter.cs" />
     <Compile Include="Maze2D\Program.cs" />
-    <Compile Include="Maze2D\QueueMoveTask.cs" />
     <Compile Include="Maze2D\Tasks\AbstractCreateMazeTask.cs" />
     <Compile Include="Maze2D\Tasks\AbstractSolver.cs" />
     <Compile Include="Maze2D\Tasks\BestFsSolver.cs" />

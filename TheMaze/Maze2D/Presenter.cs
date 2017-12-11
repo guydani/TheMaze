@@ -15,7 +15,6 @@ namespace Server.Maze2D
         private IViewer viewer;
         private Dictionary<string, ITask> options;
         private TaskFactory taskFactory;
-        private QueueMoveTask queueMoveTask;
         private Mutex mut = new Mutex();
 
         public Presenter(IModel m, IViewer v)
@@ -26,7 +25,6 @@ namespace Server.Maze2D
             model.DoneWork += EndWork;
             CreateOptionsDictionary();
             taskFactory = new TaskFactory();
-            queueMoveTask = new QueueMoveTask();
         }
 
         private void CreateOptionsDictionary()
@@ -95,7 +93,7 @@ namespace Server.Maze2D
             mut.ReleaseMutex();
             if (s.Contains("move"))
             {
-                queueMoveTask.Enqueue((MoveTask) task);
+                model.MultiPlayerMoves[c].Enqueue((MoveTask)task);
             }
             else
             {

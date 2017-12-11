@@ -19,11 +19,13 @@ namespace Server
         public event DoneWorking DoneWork;
         public Dictionary<string, IMaze<ICell<int>, int, IPosition<int>>> Games { get; }
         public Dictionary<string, MultiPlayersInformation> MultiPlayerInformation { get; }
+        public Dictionary<IClient, PriorityQueue> MultiPlayerMoves { get; }
 
         public Model()
         {
             Games = new Dictionary<string, IMaze<ICell<int>, int, IPosition<int>>>();
             MultiPlayerInformation = new Dictionary<string, MultiPlayersInformation>();
+            MultiPlayerMoves = new Dictionary<IClient, PriorityQueue>();
         }
 
         public void GenerateMazeSingle(MazeProperty mazeProperty, int index,
@@ -126,8 +128,16 @@ namespace Server
                     mazeProperty.StartPoint = kruskalAlgorithem.Maze.OptionalEntrance.GetPosition;
                     mazeProperty.AdditionalStartPoint = kruskalAlgorithem.Maze.Entrance.GetPosition;
                     OnDoneWorking(mazeProperty.SerializeClass(), check.Index2);
+                    MultiPlayerMoves[multiPlayer.FirstClient] = new PriorityQueue(1);
+                    MultiPlayerMoves[multiPlayer.SecondClient] = new PriorityQueue(1);
                 }
             }
+        }
+
+        public void MultiPlayerMove(string direction, int numberOfTask)
+        {
+            /*need to check for errors */
+            OnDoneWorking(direction, numberOfTask);
         }
 
         public void OnDoneWorking(string s, int index)

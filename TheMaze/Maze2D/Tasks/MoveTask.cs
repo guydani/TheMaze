@@ -9,11 +9,11 @@ namespace Server.Maze2D.Tasks
 {
     public class MoveTask: ITask
     {
-        public int NumberOfTask { get; set; }
         public string Name { get; set; }
-        public string command { get; set; }
+        public string Direction { get; set; }
+        public int IndexInClient { get; set; }
+        public int NumberOfTask { get; set; }
         private IModel model;
-
 
         public MoveTask(IModel m)
         {
@@ -24,7 +24,8 @@ namespace Server.Maze2D.Tasks
             try
             {
                 Name = s[1];
-                command = s[2];
+                Direction = s[2];
+                IndexInClient = int.Parse(s[3]);
                 NumberOfTask = index;
             }
             catch (Exception)
@@ -35,7 +36,7 @@ namespace Server.Maze2D.Tasks
 
         public void HandleTask()
         {
-            model.OnDoneWorking(command, NumberOfTask);
+            model.MultiPlayerMove(Direction, NumberOfTask);
         }
     }
 }
