@@ -12,13 +12,16 @@ namespace Server
     {
         private LinkedList<MoveTask> queue;
         private int startNumber;
-        private TaskFactory taskFactory;
+        private SemaphoreSlim semaphore;
+        private Thread thread;
 
         public PriorityQueue(int start)
         {
             queue = new LinkedList<MoveTask>();
             startNumber = start;
-            taskFactory = new TaskFactory();
+            semaphore = new SemaphoreSlim(0);
+            thread = new Thread(() => LoopPriorityQueue());
+            thread.Start();
         }
 
         public bool CheckIndex()
@@ -35,29 +38,33 @@ namespace Server
 
         public void Enqueue(MoveTask moveTask)
         {
-            if (moveTask.IndexInClient != startNumber)
+            queue.AddLast(moveTask);
+            semaphore.Release();
+        }
+
+        private void LoopPriorityQueue()
+        {
+            while (true)
             {
-                return;
-            }
-            startNumber += 1;
-            taskFactory.StartNew(moveTask.HandleTask);
-            while(!isEmpty() && CheckIndex())
-            {
-                for(int i = 0; i < queue.Count; i++)
+                semaphore.Wait();
+                while(!isEmpty() && CheckIndex())
                 {
-                    var temp = queue.ElementAt(i);
-                    if (temp.IndexInClient == startNumber)
+                    for (int i = 0; i < queue.Count; i++)
                     {
-                        startNumber += 1;
-                        taskFactory.StartNew(temp.HandleTask);
-                        queue.Remove(temp);
-                        break;
+                        var temp = queue.ElementAt(i);
+                        if (temp.IndexInClient == startNumber)
+                        {
+                            startNumber += 1;
+                            temp.HandleTask();
+                            queue.Remove(temp);
+                            break;
+                        }
                     }
                 }
             }
         }
 
-        public bool isEmpty()
+        private bool isEmpty()
         {
             if (queue.Count() == 0)
                 return true;

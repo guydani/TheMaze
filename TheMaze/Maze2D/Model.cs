@@ -113,6 +113,8 @@ namespace Server
                 {
                     check.SecondClient = multiPlayer.FirstClient;
                     check.Index2 = index;
+                    MultiPlayerMoves[check.FirstClient] = new PriorityQueue(1);
+                    MultiPlayerMoves[check.SecondClient] = new PriorityQueue(1);
                     MakeSizeAppropriate(size);
                     IMaze<ICell<int>, int, IPosition<int>> maze = new MazeLibary.Interface_Application.Maze2D(size);
                     var kruskalAlgorithem= new KruskalAlgorithem<Cell, int, Position>();
@@ -128,8 +130,6 @@ namespace Server
                     mazeProperty.StartPoint = kruskalAlgorithem.Maze.OptionalEntrance.GetPosition;
                     mazeProperty.AdditionalStartPoint = kruskalAlgorithem.Maze.Entrance.GetPosition;
                     OnDoneWorking(mazeProperty.SerializeClass(), check.Index2);
-                    MultiPlayerMoves[multiPlayer.FirstClient] = new PriorityQueue(1);
-                    MultiPlayerMoves[multiPlayer.SecondClient] = new PriorityQueue(1);
                 }
             }
         }

@@ -57,9 +57,12 @@ namespace Server.Maze2D
         {
             byte[] data = new byte[1024];
             data = Encoding.ASCII.GetBytes(json.ToUpper());
-            IClient client = ClientSaver[index];
-            ClientSaver.Remove(index);
-            client.Socket.Send(data, data.Length * sizeof(byte), SocketFlags.None);
+            if(ClientSaver.ContainsKey(index))
+            {
+                IClient client = ClientSaver[index];
+                ClientSaver.Remove(index);
+                client.Socket.Send(data, data.Length * sizeof(byte), SocketFlags.None);
+            }
         }
 
         protected virtual void OnMessageRecived(string s, IClient client)
