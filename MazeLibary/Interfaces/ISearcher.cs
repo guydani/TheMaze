@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace MazeLibary.Interfaces
 {
+    /* 
+        this interface define the things we need for solve the maze.
+        the second method, is for analyzing the search class.
+        */
     public interface ISearcher<T> where T: IComparable
     {
         // the search method
