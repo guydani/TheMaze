@@ -39,6 +39,7 @@ namespace Server
         public void Enqueue(MoveTask moveTask)
         {
             queue.Add(moveTask);
+            Console.WriteLine("Enqueue " + moveTask.Name + " " + moveTask.Direction + "\n");
             semaphore.Release();
         }
 
@@ -56,6 +57,7 @@ namespace Server
                         {
                             startNumber += 1;
                             temp.HandleTask();
+                            Console.WriteLine("Dequeue " + temp.Name+ " " + temp.Direction + "\n");
                             queue.Remove(temp);
                             break;
                         }

@@ -15,5 +15,6 @@ namespace Server
         Dictionary<int, IClient> ClientSaver { get; }
         void Start();
         void SendMessage(string json, int index);
+        void AddClientSaver(int index, IClient client);
     }
 }

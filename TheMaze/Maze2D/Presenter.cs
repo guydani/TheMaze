@@ -16,6 +16,7 @@ namespace Server.Maze2D
         private Dictionary<string, ITask> options;
         private TaskFactory taskFactory;
         private Mutex mut = new Mutex();
+        private int indexToFollow;
 
         public Presenter(IModel m, IViewer v)
         {
@@ -25,6 +26,7 @@ namespace Server.Maze2D
             model.DoneWork += EndWork;
             CreateOptionsDictionary();
             taskFactory = new TaskFactory();
+            indexToFollow = 1;
         }
 
         private void CreateOptionsDictionary()
@@ -43,12 +45,10 @@ namespace Server.Maze2D
 
         private int GetIndexTask()
         {
-            Random random = new Random();
-            int index = random.Next();
-            while (viewer.ClientSaver.ContainsKey(index))
-            {
-                index = random.Next();
-            }
+            mut.WaitOne();
+            int index = indexToFollow;
+            indexToFollow++;
+            mut.ReleaseMutex();
             return index;
         }
 
@@ -57,7 +57,6 @@ namespace Server.Maze2D
         {
             /*important for the movetask */
             CreateOptionsDictionary();
-            mut.WaitOne();
             int index = GetIndexTask();
             string[] commands = s.Split(' ');
             ITask task = options[commands[0]];
@@ -71,7 +70,7 @@ namespace Server.Maze2D
             }
             catch (Exception exception)
             {
-                viewer.ClientSaver[index] = c;
+                viewer.AddClientSaver(index, c);
                 viewer.SendMessage(exception.Message, index);
                 return;
             }
@@ -81,20 +80,20 @@ namespace Server.Maze2D
                 var multiPlayerInformation = model.MultiPlayerInformation[commands[1]];
                 if (multiPlayerInformation.FirstClient.Equals(c))
                 {
-                    viewer.ClientSaver[index] = multiPlayerInformation.SecondClient;
+                    viewer.AddClientSaver(index, multiPlayerInformation.SecondClient);
                 }
                 else
                 {
-                    viewer.ClientSaver[index] = multiPlayerInformation.FirstClient;
+                    viewer.AddClientSaver(index, multiPlayerInformation.FirstClient);
                 }
             }
             else
             {
-                viewer.ClientSaver[index] = c;
+                viewer.AddClientSaver(index, c);
             }
-            mut.ReleaseMutex();
             if (s.Contains("move"))
             {
+                Console.WriteLine("index: " + task.NumberOfTask.ToString() + " direction = " + ((MoveTask)task).Direction);
                 model.MultiPlayerMoves[c].Enqueue((MoveTask)task);
             }
             else

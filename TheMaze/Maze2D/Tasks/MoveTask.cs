@@ -25,6 +25,13 @@ namespace Server.Maze2D.Tasks
             {
                 Name = s[1];
                 Direction = s[2];
+                if(Direction != "up" && Direction != "UP"
+                    && Direction != "down" && Direction != "DOWN" 
+                        && Direction != "left" && Direction != "LEFT"
+                            && Direction != "right" && Direction != "RIGHT")
+                {
+                    throw new Exception();
+                }
                 IndexInClient = int.Parse(s[3]);
                 NumberOfTask = index;
             }

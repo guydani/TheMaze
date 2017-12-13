@@ -29,7 +29,7 @@ namespace Client
                         byte[] data = new byte[1024];
                         int recv = server.Receive(data);
                         string stringData = Encoding.ASCII.GetString(data, 0, recv);
-                        Console.WriteLine(stringData);
+                        Console.WriteLine(stringData + "\n");
                     }
                 });
                 thread.Start();
