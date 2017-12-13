@@ -14,6 +14,7 @@ namespace Server
         private int startNumber;
         private SemaphoreSlim semaphore;
         private Thread thread;
+        private volatile bool isActive;
 
         public PriorityQueue(int start)
         {
@@ -22,6 +23,7 @@ namespace Server
             semaphore = new SemaphoreSlim(0);
             thread = new Thread(() => LoopPriorityQueue());
             thread.Start();
+            isActive = true;
         }
 
         public bool CheckIndex()
@@ -39,13 +41,13 @@ namespace Server
         public void Enqueue(MoveTask moveTask)
         {
             queue.Add(moveTask);
-            Console.WriteLine("Enqueue " + moveTask.Name + " " + moveTask.Direction + "\n");
+            //Console.WriteLine("Enqueue " + moveTask.Name + " " + moveTask.Direction + "\n");
             semaphore.Release();
         }
 
         private void LoopPriorityQueue()
         {
-            while (true)
+            while (isActive)
             {
                 semaphore.Wait();
                 while(!isEmpty() && CheckIndex())
@@ -73,5 +75,10 @@ namespace Server
             return false;
         }
 
+        public void CloseResources()
+        {
+            isActive = false;
+            semaphore.Release();
+        }
     }
 }

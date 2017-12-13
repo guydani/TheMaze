@@ -12,6 +12,7 @@ namespace Server.Maze2D.Tasks
     {
         public int NumberOfTask { get; set; }
         public IModel model;
+        public string Name { get; set; }
 
         public CloseTask(IModel m)
         {
@@ -20,11 +21,12 @@ namespace Server.Maze2D.Tasks
         public void SetCommand(string[] s, int index)
         {
             NumberOfTask = index;
+            Name = s[1];
         }
 
         public void HandleTask()
         {
-            model.OnDoneWorking("close game", NumberOfTask);
+            model.CloseOption(Name, NumberOfTask);
         }
     }
 }

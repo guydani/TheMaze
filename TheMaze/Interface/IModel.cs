@@ -22,6 +22,7 @@ namespace Server.Interface
         void GetMultiPlayersWaiting(int index);
         void MultiPlayerOption(MultiPlayersInformation multiPlayer, List<int> size, int index);
         void MultiPlayerMove(string direction, int numberOfTask);
+        void CloseOption(string name, int numberOfTask);
         void OnDoneWorking(string s, int index);
     }
 }

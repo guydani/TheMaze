@@ -59,9 +59,11 @@ namespace Server.Maze2D
             CreateOptionsDictionary();
             int index = GetIndexTask();
             string[] commands = s.Split(' ');
-            ITask task = options[commands[0]];
+            ITask task = null;
             try
             {
+                if (!options.TryGetValue(commands[0], out task))
+                    throw new Exception("command not available");
                 task.SetCommand(commands, index);
                 if (s.Contains("multiplayer"))
                 {
@@ -76,7 +78,6 @@ namespace Server.Maze2D
             }
             if (s.Contains("move") || s.Contains("close"))
             {
-
                 var multiPlayerInformation = model.MultiPlayerInformation[commands[1]];
                 if (multiPlayerInformation.FirstClient.Equals(c))
                 {
@@ -93,7 +94,7 @@ namespace Server.Maze2D
             }
             if (s.Contains("move"))
             {
-                Console.WriteLine("index: " + task.NumberOfTask.ToString() + " direction = " + ((MoveTask)task).Direction);
+                //Console.WriteLine("index: " + task.NumberOfTask.ToString() + " direction = " + ((MoveTask)task).Direction);
                 model.MultiPlayerMoves[c].Enqueue((MoveTask)task);
             }
             else

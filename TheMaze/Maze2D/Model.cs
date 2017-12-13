@@ -140,6 +140,18 @@ namespace Server
             OnDoneWorking(direction, numberOfTask);
         }
 
+        public void CloseOption(string name, int numberOfTask)
+        {
+            var information = MultiPlayerInformation[name];
+            MultiPlayerInformation.Remove(name);
+            MultiPlayerMoves[information.FirstClient].CloseResources();
+            MultiPlayerMoves.Remove(information.FirstClient);
+            MultiPlayerMoves[information.SecondClient].CloseResources();
+            MultiPlayerMoves.Remove(information.SecondClient);
+            Games.Remove(name);
+            OnDoneWorking("close game", numberOfTask);
+        }
+
         public void OnDoneWorking(string s, int index)
         {
             if (DoneWork != null)

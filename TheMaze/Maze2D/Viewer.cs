@@ -32,9 +32,10 @@ namespace Server.Maze2D
             {
                 Socket c = socket.Accept();
                 Client client = new Client(c);
+                bool isActive = true;
                 Thread t = new Thread(delegate ()
                 {
-                    while (true)
+                    while (isActive)
                     {
                         byte[] data = new byte[1024];
                         int recv = c.Receive(data);
@@ -44,6 +45,7 @@ namespace Server.Maze2D
                         foreach (var i in commands)
                         {
                             if (i == "") { break; }
+                            if(i == "exit") { isActive = false; }
                             OnMessageRecived(i, client);
                         }
                     }
