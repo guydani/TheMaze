@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace MazeLibary.SearchableClasses
 {
+    /* creates the maze by using prims, as the psadu code in wikipedia. */
     public class PrimsAlgorithem<ICell, T, IPosition> : AbstractCreateMaze<ICell, T, IPosition> where T : IComparable
     {
         public override void CreateMaze()

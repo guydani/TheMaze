@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace MazeLibary.SearchableClasses
 {
+    /* creates the maze by using kruskal, as the psadu code in wikipedia. */
     public class KruskalAlgorithem<ICell, T, IPosition> : AbstractCreateMaze<ICell, T, IPosition> where T : IComparable
     {
         public override void CreateMaze()

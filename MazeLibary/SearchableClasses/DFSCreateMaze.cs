@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace MazeLibary.SearchableClasses
 {
+    /* creates the maze by using dfs, as the psadu code in wikipedia. 
+     * most the time this maze is simplier then others */
     public class DFSCreateMaze<ICell, T, IPosition> : AbstractCreateMaze<ICell, T, IPosition> where T : IComparable
     {
         public override void CreateMaze()

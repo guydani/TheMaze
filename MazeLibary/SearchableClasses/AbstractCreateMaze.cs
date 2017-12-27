@@ -9,9 +9,15 @@ using MazeLibary.SearcherClasses;
 
 namespace MazeLibary.SearchableClasses
 {
+    /* this class implement the ICreator interface.
+     * it holds the maze, and implement the methods that the creator of the game need.
+     * it have to be virtual, because it depends on which cell we implement*/
     public abstract class AbstractCreateMaze<ICell, T, IPosition> : ICreator<ICell, T, IPosition> where T : IComparable
     {
         private IMaze<ICell<T>, T, IPosition<T>> maze;
+
+        /* to make the maze work for one or two player, we need to make some changes.
+         * if we play one player, we use this method, and use the maze.Entrance and the maze.Exit */
 
         protected void GetSingleStartEndPoint()
         {
@@ -64,7 +70,10 @@ namespace MazeLibary.SearchableClasses
             Maze.Exit = tempCell;
         }
 
-        /* need to use "GetSingleStartEndPoint()" before this function*/
+        /* this method find the other start point, and the end point of the game.
+         * for two player we use the maze.Entrance, maze.OptionalEntrance, and for the end point, only
+         * the maze.optionalExit. we need to use "GetSingleStartEndPoint()" before this function */
+
         public void GetMultiStartEndPoint()
         {
             foreach (ICell<T> i in maze)
@@ -99,6 +108,9 @@ namespace MazeLibary.SearchableClasses
             maze.OptionalEntrance = tempCell;
             GetMultiExit();
         }
+
+        /* this is a private method, only the method above use it. it help to maximize, the exit of both players
+         * and make the exit fair to both sides */
 
         private void GetMultiExit()
         {
@@ -156,7 +168,7 @@ namespace MazeLibary.SearchableClasses
             Maze.OptionalExit = maxCell;
         }
 
-
+        /* check if there is cell unvisited. because Imaze iterable, it goes over only the cells and not the position */
         protected bool CheckIfUnVisitedCell() 
         {
             foreach (ICell<T> i in Maze)
@@ -167,6 +179,8 @@ namespace MazeLibary.SearchableClasses
             return false;
         }
 
+        /* the maze creates him self, for single and multi player.
+         * and each user, use what he needs */
         public IMaze<ICell<T>, T, IPosition<T>> Maze
         {
             get { return maze; }
@@ -184,6 +198,7 @@ namespace MazeLibary.SearchableClasses
             }
         }
 
+        /* initial the maze */
         public void InitialMaze()
         {
             maze.InitialMaze();

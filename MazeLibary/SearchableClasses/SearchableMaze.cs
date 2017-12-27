@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace MazeLibary.SearchableClasses
 {
+    /* this class help us make the bridge pattern.
+     * we want to give the class who search all the methods they need for search,
+     * buy to hide other things. the search class know to run over evry maze who implement this. */
     public class SearchableMaze<T> : ISearchable<T> where T : IComparable
     {
         public IMaze<ICell<T>, T, IPosition<T>> Maze { get; set; }
