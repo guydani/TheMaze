@@ -10,6 +10,23 @@ using Server.Interface;
 
 namespace Server.Maze2D
 {
+    /* the acceptable commands for this server is:
+       for create single player:
+            1. generate1 [name] [sizeHight] [sizeWidth]
+            2. generate2 [name] [sizeHight] [sizeWidth]
+            3. generate3 [name] [sizeHight] [sizeWidth]
+        for find solution from one point to the end:
+            1. solve1 [name] [pointHeight] [pointWidth]
+            2. solve2 [name] [pointHeight] [pointWidth]
+        for getting the multi player waiting for play:
+            games_waiting
+        for ask to play in multiplayer mod:
+            multiplayer [name] [sizeHight] [sizeWidth]
+        for ask to move to direction in multiplayer mod:
+            move [name] [direction = up, down, left, right] [index]
+            importent: this index is as we want it to get to the other player. if one index miss - problem.
+            the index strats from 1.
+        */
     public class Viewer : IViewer
     {
         public event MessageRecived MessageRecivedWaitToExecute;

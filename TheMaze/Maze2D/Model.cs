@@ -140,6 +140,8 @@ namespace Server
             OnDoneWorking(direction, numberOfTask);
         }
 
+        /*probably need to check little more, because if one close and then the other,
+          all the program will crash.. need to add if.. */
         public void CloseOption(string name, int numberOfTask)
         {
             var information = MultiPlayerInformation[name];
