@@ -24,5 +24,25 @@ namespace ClientApplication
         {
             InitializeComponent();
         }
+
+        private void SinglePlayer_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Multiplayer_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Options_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
