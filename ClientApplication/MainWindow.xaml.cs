@@ -25,12 +25,7 @@ namespace ClientApplication
             InitializeComponent();
         }
 
-        private void SinglePlayer_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Multiplayer_Click(object sender, RoutedEventArgs e)
+        private void Exit_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -40,7 +35,12 @@ namespace ClientApplication
 
         }
 
-        private void Exit_Click(object sender, RoutedEventArgs e)
+        private void Multiplayer_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SinglePlayer_Click(object sender, RoutedEventArgs e)
         {
 
         }
