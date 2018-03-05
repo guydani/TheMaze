@@ -1,0 +1,26 @@
+﻿<Window x:Class="ClientApplication.View.SinglePlayerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClientApplication.View"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Title="MainWindow" Height="500" Width="625" FontFamily="Cooper Black" FontSize="26.667" FontWeight="Bold">
+    <Window.Background>
+        <ImageBrush ImageSource="C:\Users\Guy\Documents\Visual Studio 2015\Projects\TheMaze\ClientApplication\Resources\vectorstash-pacman.png"/>
+    </Window.Background>
+    <Grid Width="200" Height="250" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button x:Name="Size" Grid.Row="0" Content="Size:" Foreground="#FFA44A28" Background="#00000000" BorderBrush="#00000000" />
+        <Button x:Name="Multiplayer" Grid.Row= "1" Content="Multiplayer" Foreground="#FFA44A28" Background="#00000000" BorderBrush="#00000000" Click="Multiplayer_Click"/>
+        <Button x:Name="Options" Grid.Row= "2" Content="Options" Foreground="#FFA44A28" Background="#00000000" BorderBrush="#00000000" Click="Options_Click"/>
+        <Button x:Name="Exit" Grid.Row= "3" Content="Exit" Foreground="#FFA44A28" Background="#00000000" BorderBrush="#00000000" Click="Exit_Click" />
+    </Grid>
+</Window>
